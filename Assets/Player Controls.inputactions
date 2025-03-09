@@ -1,0 +1,62 @@
+{
+    "name": "Player Controls",
+    "maps": [
+        {
+            "name": "New action map",
+            "id": "6a28f8c4-1296-4ec1-977b-c921ae929367",
+            "actions": [
+                {
+                    "name": "New action",
+                    "type": "Button",
+                    "id": "389ba536-6456-43f2-aad8-78effe563460",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "74d8a292-a624-4a04-9f16-2bfe9262e49d",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "New action",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "New action map1",
+            "id": "f04545fc-42ac-4bca-bf13-0e2161bf2613",
+            "actions": [
+                {
+                    "name": "Move",
+                    "type": "Value",
+                    "id": "67eb56de-6935-4eb0-a6e1-efbb2cffa2a3",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "48c7d071-1e07-4318-95a8-6c247fd07d23",
+                    "path": "WASD",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Move",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
