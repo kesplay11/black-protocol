@@ -2,10 +2,10 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAI : MonoBehaviour
+public class EnemyMovement : MonoBehaviour
 {
     public Transform[] patrolPoints;         
-    public Transform target;                 
+    public Transform targetPlayer;                 
     public float patrolWaitTime = 2f;       
 
     private Animator animator; 
@@ -27,9 +27,9 @@ public class EnemyAI : MonoBehaviour
 
     void Update()
     {
-        if (followPlayer && target != null)
+        if (followPlayer && targetPlayer != null)
         {
-            agent.SetDestination(target.position);
+            agent.SetDestination(targetPlayer.position);
 
     
         }
