@@ -5,15 +5,18 @@ TagManager:
   serializedVersion: 2
   tags:
   - schutzstaffel_a
+  - Ground
+  - Environment
+  - Enemy
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Proyectil
   - Water
   - UI
   - Puente
-  - 
+  - EnemyBullet
   - 
   - 
   - 
