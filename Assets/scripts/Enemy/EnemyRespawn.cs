@@ -11,10 +11,13 @@ public class EnemyRespawn : MonoBehaviour
 
     private Quaternion spawnRotation;
 
+    private EnemyHealt resetLife;
+
     void Start()
     {
         positionSpawn = transform.position;
         spawnRotation = transform.rotation;
+        resetLife = GetComponent<EnemyHealt>();
 
     }
 
@@ -26,6 +29,8 @@ public class EnemyRespawn : MonoBehaviour
     {
         transform.position = positionSpawn;
         transform.rotation = spawnRotation;
+        resetLife.enemyLife = 100;
+
         gameObject.SetActive(true);
     }
 

@@ -11,8 +11,6 @@ public class EnemyHealt : MonoBehaviour
 
     public bool destroy= false;
 
-    public int damangeLife;
-
     private EnemyRespawn respawnScript;
 
    
@@ -21,7 +19,6 @@ public class EnemyHealt : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        damangeLife = enemyLife;
         respawnScript = GetComponent<EnemyRespawn>();
         
     }
@@ -42,12 +39,14 @@ public class EnemyHealt : MonoBehaviour
         
     }
 
-    public void PlayerDamange(int Damange){
+    public void TakeDamange(int Damange){
 
-        if (damangeLife < 0 ){
+        enemyLife-= Damange;
+
+        if (enemyLife <= 0 ){
 
             respawnScript.StartRespawn();
-            gameObject.SetActive(false);
+
         }
     }
     void Update()
