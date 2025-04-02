@@ -38,9 +38,9 @@ public class EnemyShooter : MonoBehaviour
     {
         Vector3 directionPlayer= (player.position - firePoint.position).normalized;
 
-        float angle = Vector3.Dot(transform.forward, directionPlayer);
+        float angle = Vector3.Angle(transform.forward, directionPlayer);
 
-        if(angle < 0.0f){
+        if(angle > 30f){
             return;
         }
 
