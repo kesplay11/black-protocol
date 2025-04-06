@@ -2,13 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DetectionPlayer : MonoBehaviour
+public class DetectionPlayerLvl1 : MonoBehaviour
 {
-    private EnemyMovementLvl2 enemyScript;
+    private EnemyMovement enemyScript;
     // Start is called before the first frame update
     void Start()
     {
-        enemyScript = GetComponentInParent<EnemyMovementLvl2>();
+        enemyScript = GetComponentInParent<EnemyMovement>();
 
     }
 

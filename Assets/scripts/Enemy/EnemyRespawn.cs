@@ -23,6 +23,7 @@ public class EnemyRespawn : MonoBehaviour
 
     public void StartRespawn(){
         gameObject.SetActive(false);
+        EnemyMananger.Instance.EnemyDefeat();
         Invoke(nameof(ResetEnemy), timeRespawn);
     }
     void ResetEnemy()
