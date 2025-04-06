@@ -7,6 +7,8 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] private Rigidbody _rigidbody;
 
+    public int damage = 20;
+
     void Start()
     {
         StartCoroutine(WaitingLife());
@@ -26,10 +28,20 @@ public class Projectile : MonoBehaviour
 
     public void OnTriggerEnter(Collider other)
     {
+
+        if(other.CompareTag("Enemy")){
+            EnemyHealt enemyHealt = other.GetComponent<EnemyHealt>();
+
+            if(enemyHealt != null){
+                enemyHealt.TakeDamange(damage);
+            }
+            ProjectilePool.Instance.Return(this);
+        }
         if (other.CompareTag("Environment"))
         {
             ProjectilePool.Instance.Return(this);
         }
+        
     }
 
 }

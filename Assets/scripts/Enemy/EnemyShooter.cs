@@ -1,3 +1,4 @@
+
 using UnityEngine;
 
 public class EnemyShooter : MonoBehaviour
@@ -7,15 +8,18 @@ public class EnemyShooter : MonoBehaviour
     public Transform firePoint;      
     public float fireRate = 1f;      
     public float bulletSpeed = 20f;  
-    public float detectionRange = 10f; 
+    public float detectionRange = 8f; 
     public LayerMask playerLayer;    
 
     private Transform player;
     private float nextFireTime = 0f;
 
+    private EnemyMovement enemyMovement;
+
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player")?.transform;
+
     }
 
     void Update()
@@ -32,8 +36,24 @@ public class EnemyShooter : MonoBehaviour
 
     void Shoot()
     {
-        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, firePoint.rotation);
+        Vector3 directionPlayer= (player.position - firePoint.position).normalized;
+
+        float angle = Vector3.Angle(transform.forward, directionPlayer);
+
+        if(angle > 30f){
+            return;
+        }
+
+        float missShoot = 0.1f;
+
+        Vector3 missShootVector = new Vector3(Random.Range(-missShoot, missShoot),
+        Random.Range(-missShoot, missShoot),
+        Random.Range(-missShoot, missShoot));
+
+        Vector3 shootFinal = (directionPlayer + missShootVector).normalized;
+        
+        GameObject bullet = Instantiate(bulletPrefab, firePoint.position, Quaternion.LookRotation(shootFinal));
         Rigidbody rb = bullet.GetComponent<Rigidbody>();
-        rb.velocity = firePoint.forward * bulletSpeed;
+        rb.velocity = shootFinal * bulletSpeed;
     }
 }

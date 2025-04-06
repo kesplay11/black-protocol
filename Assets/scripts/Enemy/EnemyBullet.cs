@@ -15,19 +15,19 @@ public class EnemyBullet : MonoBehaviour
 
     //si impacta al jugador
 
-   /* private void OnTriggerEnter(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player")) 
         {
             PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
-                playerHealth.TakeDamage(damage);
+                playerHealth.TakeDamange(damageBullet);
             }
         }
 
         Destroy(gameObject); 
-    }*/
+    }
 }
 
 
