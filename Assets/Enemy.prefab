@@ -169,6 +169,7 @@ GameObject:
   - component: {fileID: 728502776528780983}
   - component: {fileID: 6470132912862479404}
   - component: {fileID: 5442457387227018857}
+  - component: {fileID: 3603890176966961169}
   m_Layer: 8
   m_Name: DetectedZone
   m_TagString: Untagged
@@ -239,6 +240,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &3603890176966961169
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2473865078467606735}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 477f1154fcd28f24ea8b66fffd8df1b6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3821653590734971300
 GameObject:
   m_ObjectHideFlags: 0
