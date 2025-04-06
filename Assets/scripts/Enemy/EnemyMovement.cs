@@ -2,10 +2,10 @@
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAI : MonoBehaviour
+public class EnemyMovement : MonoBehaviour
 {
     public Transform[] patrolPoints;         
-    public Transform target;                 
+    public Transform targetPlayer;                 
     public float patrolWaitTime = 2f;       
 
     private Animator animator; 
@@ -14,24 +14,24 @@ public class EnemyAI : MonoBehaviour
     private int currentPatrolIndex;
     private bool followPlayer = false;
     private float waitTimer;
-
     
+    
+
 
     void Start()
     {
         animator = GetComponentInChildren<Animator>();
         agent = GetComponent<NavMeshAgent>();
-        GoToNextPatrolPoint();
         animator.SetInteger("status_MP40",1);
+        GoToNextPatrolPoint();
     }
 
     void Update()
     {
-        if (followPlayer && target != null)
+        if (followPlayer && targetPlayer !=null )
         {
-            agent.SetDestination(target.position);
+            agent.SetDestination(targetPlayer.position);
 
-    
         }
         
         else
@@ -49,7 +49,7 @@ public class EnemyAI : MonoBehaviour
 
     void Patrol()
     {
-        if (agent.remainingDistance < 0.5f && !agent.pathPending)
+        if (agent.remainingDistance < 2f && !agent.pathPending)
         {
             waitTimer += Time.deltaTime;
 
@@ -72,24 +72,17 @@ public class EnemyAI : MonoBehaviour
     }
 
     
+    public void DetectedPlayer(bool detected){
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log("Detected player");
-            followPlayer = true;
-        }
-    }
+        followPlayer = detected;
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
-        {
-            followPlayer = false;
+        if(followPlayer){
+
+            agent.SetDestination(targetPlayer.position);
+        }else{
+
             GoToNextPatrolPoint();
         }
     }
-
     
 }
