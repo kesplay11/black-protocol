@@ -50,10 +50,11 @@ public class ProjectilePool : MonoBehaviour
     }
 
     public void Return(Projectile projectile)
-    {
-        projectile.gameObject.SetActive(false);
-        _queue.Enqueue(projectile);
-    }
+{
+    projectile.StopAllCoroutines(); // ← Detenemos cualquier corrutina activa
+    projectile.gameObject.SetActive(false);
+    _queue.Enqueue(projectile);
+}
 
     void Update()
     {

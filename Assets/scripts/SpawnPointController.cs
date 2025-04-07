@@ -8,11 +8,13 @@ public class SpawnPointController : MonoBehaviour
     public Transform playerBody;
     public Transform cameraTransform;
 
-    void LateUpdate()
-    {
-        float yRot = playerBody.eulerAngles.y;
-        float xRot = cameraTransform.localEulerAngles.x;
 
-        spawnPoint.rotation = Quaternion.Euler(xRot, yRot, 0f);
-    }
+void LateUpdate()
+{
+    float yRot = playerBody.eulerAngles.y;
+    float xRot = cameraTransform.localEulerAngles.x;
+
+    // 🚨 Posible interferencia con la cámara
+    // spawnPoint.rotation = Quaternion.Euler(xRot, yRot, 0f);
+}
 }

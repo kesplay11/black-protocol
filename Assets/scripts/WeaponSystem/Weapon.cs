@@ -7,31 +7,75 @@ namespace WeaponSystem
     public class Weapon : MonoBehaviour
     {
         [SerializeField] private Transform _spawnPosition;
-        [SerializeField] private float _force = 30;
+        [SerializeField] private float _force = 30f;
 
-        // Update is called once per frame
+        [Header("Audio")]
+        [SerializeField] private AudioSource shootSound;
+
+        [Header("Balas")]
+        [SerializeField] private int totalAmmo = 210;
+        [SerializeField] private int magazineSize = 30;
+        private int currentAmmo;
+
+        private bool isReloading = false;
+
+        void Start()
+        {
+            currentAmmo = magazineSize;
+        }
+
         void Update()
         {
-            // Solo disparamos si se hace clic izquierdo (Button 0).
-            if (Input.GetMouseButtonDown(0)) 
+            if (isReloading) return;
+
+            if (Input.GetMouseButtonDown(0))
             {
-                Shoot(); // Llamamos a la función para disparar solo cuando se hace clic.
+                Shoot();
+            }
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                StartCoroutine(Reload());
             }
         }
 
         private void Shoot()
         {
-            // Obtiene un proyectil de la piscina.
+            if (currentAmmo <= 0)
+            {
+                Debug.Log("Cargador vacío. Recarga con 'R'");
+                return;
+            }
+
             var projectile = ProjectilePool.Instance.Get();
-
-            // Establece la posición del proyectil en el punto de disparo.
             projectile.transform.position = _spawnPosition.position;
-
-            // Activa el proyectil.
             projectile.gameObject.SetActive(true);
-
-            // Llama al método Shoot() del proyectil para darle fuerza y dirección.
             projectile.Shoot(_force, _spawnPosition.forward);
+
+            shootSound?.Play(); // sonido de disparo (si fue asignado)
+
+            currentAmmo--;
+            Debug.Log($"Disparaste. Balas en cargador: {currentAmmo}, Total: {totalAmmo}");
+        }
+
+        private IEnumerator Reload()
+        {
+            if (currentAmmo == magazineSize || totalAmmo <= 0) yield break;
+
+            isReloading = true;
+            Debug.Log("Recargando...");
+
+            yield return new WaitForSeconds(1.5f); // tiempo de recarga
+
+            int needed = magazineSize - currentAmmo;
+            int toReload = Mathf.Min(needed, totalAmmo);
+
+            currentAmmo += toReload;
+            totalAmmo -= toReload;
+
+            Debug.Log($"Recargado. Balas en cargador: {currentAmmo}, Total: {totalAmmo}");
+
+            isReloading = false;
         }
     }
 }

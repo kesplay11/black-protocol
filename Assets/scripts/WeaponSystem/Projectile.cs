@@ -14,10 +14,10 @@ public class Projectile : MonoBehaviour
 
 
     public void Shoot(float force, Vector3 direction)
-    {
-        _rigidbody.velocity = direction * force;
-    }
-
+{
+    _rigidbody.velocity = direction * force;
+    StartCoroutine(WaitingLife()); // ← Esto inicia el temporizador cuando se dispara
+}
     private IEnumerator WaitingLife()
     {
         yield return new WaitForSeconds(5);
