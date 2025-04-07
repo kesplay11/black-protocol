@@ -7,31 +7,76 @@ namespace WeaponSystem
     public class Weapon : MonoBehaviour
     {
         [SerializeField] private Transform _spawnPosition;
-        [SerializeField] private float _force = 30;
+        [SerializeField] private float _force = 30f;
+        [SerializeField] private float _reloadTime = 2f;
 
-        // Update is called once per frame
+        [SerializeField] private int maxAmmoInClip = 30;
+        [SerializeField] private int totalAmmo = 210;
+
+        private int currentAmmoInClip;
+        private bool isReloading = false;
+
+        [Header("Audio")]
+        [SerializeField] private AudioSource shootAudio;
+
+        // Para acceder desde el HUD si querés más adelante
+        public int CurrentAmmo => currentAmmoInClip;
+        public int TotalAmmo => totalAmmo;
+
+        void Start()
+        {
+            currentAmmoInClip = maxAmmoInClip;
+        }
+
         void Update()
         {
-            // Solo disparamos si se hace clic izquierdo (Button 0).
-            if (Input.GetMouseButtonDown(0)) 
+            if (isReloading) return;
+
+            if (Input.GetMouseButtonDown(0))
             {
-                Shoot(); // Llamamos a la función para disparar solo cuando se hace clic.
+                Shoot();
+            }
+
+            if (Input.GetKeyDown(KeyCode.R))
+            {
+                if (currentAmmoInClip < maxAmmoInClip && totalAmmo > 0)
+                {
+                    StartCoroutine(Reload());
+                }
             }
         }
 
         private void Shoot()
         {
-            // Obtiene un proyectil de la piscina.
+            if (currentAmmoInClip <= 0)
+            {
+                // Podés reproducir un sonido de click vacío si querés
+                return;
+            }
+
+            currentAmmoInClip--;
+
             var projectile = ProjectilePool.Instance.Get();
-
-            // Establece la posición del proyectil en el punto de disparo.
             projectile.transform.position = _spawnPosition.position;
-
-            // Activa el proyectil.
             projectile.gameObject.SetActive(true);
-
-            // Llama al método Shoot() del proyectil para darle fuerza y dirección.
             projectile.Shoot(_force, _spawnPosition.forward);
+
+            if (shootAudio != null)
+                shootAudio.Play();
+        }
+
+        private IEnumerator Reload()
+        {
+            isReloading = true;
+            yield return new WaitForSeconds(_reloadTime);
+
+            int neededAmmo = maxAmmoInClip - currentAmmoInClip;
+            int ammoToReload = Mathf.Min(neededAmmo, totalAmmo);
+
+            currentAmmoInClip += ammoToReload;
+            totalAmmo -= ammoToReload;
+
+            isReloading = false;
         }
     }
 }
