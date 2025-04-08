@@ -6,12 +6,27 @@ using UnityEngine;
 public class Projectile : MonoBehaviour
 {
     [SerializeField] private Rigidbody _rigidbody;
+    [SerializeField] private float _lifeTime = 5f;
 
-    void Start()
+    public int damage = 20;
+
+    private Coroutine _lifeCoroutine;
+    private bool _hasHit = false;
+
+    void OnEnable()
     {
-        StartCoroutine(WaitingLife());
+        _hasHit = false;
+        _rigidbody.velocity = Vector3.zero;
+        _lifeCoroutine = StartCoroutine(WaitingLife());
     }
 
+    void OnDisable()
+    {
+        if (_lifeCoroutine != null)
+        {
+            StopCoroutine(_lifeCoroutine);
+        }
+    }
 
     public void Shoot(float force, Vector3 direction)
 {
@@ -20,16 +35,39 @@ public class Projectile : MonoBehaviour
 }
     private IEnumerator WaitingLife()
     {
-        yield return new WaitForSeconds(5);
-        ProjectilePool.Instance.Return(this);
+        yield return new WaitForSeconds(_lifeTime);
+        ReturnToPool();
     }
 
-    public void OnTriggerEnter(Collider other)
+private void OnTriggerEnter(Collider other)
+{
+    if (_hasHit) return;
+
+    // Ignorar colisiones con zonas auxiliares
+    if (other.CompareTag("DetectedZone") || other.CompareTag("Player")) return;
+
+    _hasHit = true;
+
+    if (other.CompareTag("Enemy"))
     {
-        if (other.CompareTag("Environment"))
+        EnemyHealt enemyHealt = other.GetComponent<EnemyHealt>();
+        if (enemyHealt == null)
         {
-            ProjectilePool.Instance.Return(this);
+            enemyHealt = other.GetComponentInParent<EnemyHealt>(); // por si el collider no está en el root
+        }
+
+        if (enemyHealt != null)
+        {
+            enemyHealt.TakeDamange(damage);
         }
     }
 
+    ReturnToPool();
 }
+
+    private void ReturnToPool()
+    {
+        ProjectilePool.Instance.Return(this);
+    }
+}
+

@@ -8,20 +8,24 @@ namespace WeaponSystem
     {
         [SerializeField] private Transform _spawnPosition;
         [SerializeField] private float _force = 30f;
+        [SerializeField] private float _reloadTime = 2f;
+
+        [SerializeField] private int maxAmmoInClip = 30;
+        [SerializeField] private int totalAmmo = 210;
+
+        private int currentAmmoInClip;
+        private bool isReloading = false;
 
         [Header("Audio")]
-        [SerializeField] private AudioSource shootSound;
+        [SerializeField] private AudioSource shootAudio;
 
-        [Header("Balas")]
-        [SerializeField] private int totalAmmo = 210;
-        [SerializeField] private int magazineSize = 30;
-        private int currentAmmo;
-
-        private bool isReloading = false;
+        // Para acceder desde el HUD si querés más adelante
+        public int CurrentAmmo => currentAmmoInClip;
+        public int TotalAmmo => totalAmmo;
 
         void Start()
         {
-            currentAmmo = magazineSize;
+            currentAmmoInClip = maxAmmoInClip;
         }
 
         void Update()
@@ -35,45 +39,42 @@ namespace WeaponSystem
 
             if (Input.GetKeyDown(KeyCode.R))
             {
-                StartCoroutine(Reload());
+                if (currentAmmoInClip < maxAmmoInClip && totalAmmo > 0)
+                {
+                    StartCoroutine(Reload());
+                }
             }
         }
 
         private void Shoot()
         {
-            if (currentAmmo <= 0)
+            if (currentAmmoInClip <= 0)
             {
-                Debug.Log("Cargador vacío. Recarga con 'R'");
+                // Podés reproducir un sonido de click vacío si querés
                 return;
             }
+
+            currentAmmoInClip--;
 
             var projectile = ProjectilePool.Instance.Get();
             projectile.transform.position = _spawnPosition.position;
             projectile.gameObject.SetActive(true);
             projectile.Shoot(_force, _spawnPosition.forward);
 
-            shootSound?.Play(); // sonido de disparo (si fue asignado)
-
-            currentAmmo--;
-            Debug.Log($"Disparaste. Balas en cargador: {currentAmmo}, Total: {totalAmmo}");
+            if (shootAudio != null)
+                shootAudio.Play();
         }
 
         private IEnumerator Reload()
         {
-            if (currentAmmo == magazineSize || totalAmmo <= 0) yield break;
-
             isReloading = true;
-            Debug.Log("Recargando...");
+            yield return new WaitForSeconds(_reloadTime);
 
-            yield return new WaitForSeconds(1.5f); // tiempo de recarga
+            int neededAmmo = maxAmmoInClip - currentAmmoInClip;
+            int ammoToReload = Mathf.Min(neededAmmo, totalAmmo);
 
-            int needed = magazineSize - currentAmmo;
-            int toReload = Mathf.Min(needed, totalAmmo);
-
-            currentAmmo += toReload;
-            totalAmmo -= toReload;
-
-            Debug.Log($"Recargado. Balas en cargador: {currentAmmo}, Total: {totalAmmo}");
+            currentAmmoInClip += ammoToReload;
+            totalAmmo -= ammoToReload;
 
             isReloading = false;
         }

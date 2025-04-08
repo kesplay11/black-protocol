@@ -7,8 +7,8 @@ public class ProjectilePool : MonoBehaviour
     [SerializeField] private Projectile _projectile;
 
     [Header("Settings")]
-    [SerializeField] private int _maxCapacity;
-    [SerializeField] private int _initCapacity;
+    [SerializeField] private int _maxCapacity = 30;
+    [SerializeField] private int _initCapacity = 10;
 
     private Queue<Projectile> _queue = new();
 
@@ -16,18 +16,17 @@ public class ProjectilePool : MonoBehaviour
 
     void Awake()
     {
-        if (ProjectilePool.Instance != null)
+        if (Instance != null && Instance != this)
         {
-            Destroy(this);
+            Destroy(gameObject);
             return;
         }
-        
+
         Instance = this;
     }
 
     void Start()
     {
-        // Inicializar la piscina de proyectiles con la capacidad inicial.
         for (int i = 0; i < _initCapacity; i++)
         {
             var projectile = Instantiate(_projectile);
@@ -38,26 +37,29 @@ public class ProjectilePool : MonoBehaviour
 
     public Projectile Get()
     {
+        Projectile projectile;
+
         if (_queue.Count > 0)
         {
-            return _queue.Dequeue();
+            projectile = _queue.Dequeue();
+        }
+        else if (_queue.Count + 1 <= _maxCapacity)
+        {
+            projectile = Instantiate(_projectile);
+        }
+        else
+        {
+            Debug.LogWarning("Se alcanzó la capacidad máxima del pool de proyectiles.");
+            return null;
         }
 
-        // Si no hay proyectiles disponibles, crear uno nuevo.
-        var projectile = Instantiate(_projectile);
-        projectile.gameObject.SetActive(false);
+        projectile.gameObject.SetActive(true);
         return projectile;
     }
 
     public void Return(Projectile projectile)
-{
-    projectile.StopAllCoroutines(); // ← Detenemos cualquier corrutina activa
-    projectile.gameObject.SetActive(false);
-    _queue.Enqueue(projectile);
-}
-
-    void Update()
     {
-        // Aquí puedes agregar la lógica para actualizar el estado de la piscina si es necesario.
+        projectile.gameObject.SetActive(false);
+        _queue.Enqueue(projectile);
     }
 }
