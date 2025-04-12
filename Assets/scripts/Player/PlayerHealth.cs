@@ -7,31 +7,29 @@ using UnityEngine.UI;
 public class PlayerHealth : MonoBehaviour
 {
     public int maxHealth = 100;
-    public int maxLife = 100;
     public int playerLifer;
     public bool isDead = false;
 
-    [SerializeField] private Slider lifeBar; // Asigna desde el Inspector
+    [SerializeField] private Slider lifeBar;
 
     private void Start()
     {
-        // Inicializamos el valor de la barra
         playerLifer = maxHealth;
 
         if (lifeBar != null)
         {
-            lifeBar.maxValue = maxLife;
+            lifeBar.maxValue = maxHealth;
             lifeBar.value = playerLifer;
-            lifeBar.interactable = false; // No interactuable
+            lifeBar.interactable = false;
         }
     }
 
-    public void TakeDamange(int damange)
+    public void TakeDamage(int damage)
     {
         if (isDead)
             return;
 
-        playerLifer -= damange;
+        playerLifer -= damage;
         Debug.Log("Player Life: " + playerLifer);
 
         if (lifeBar != null)
@@ -49,8 +47,6 @@ public class PlayerHealth : MonoBehaviour
     {
         isDead = true;
         Debug.Log("El jugador ha muerto");
-
-        // Reinicia la escena actual
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
-    }
+    }     
 }

@@ -22,7 +22,7 @@ public class EnemyBullet : MonoBehaviour
             PlayerHealth playerHealth = other.GetComponent<PlayerHealth>();
             if (playerHealth != null)
             {
-                playerHealth.TakeDamange(damageBullet);
+                playerHealth.TakeDamage(damageBullet);
             }
         }
 
