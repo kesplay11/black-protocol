@@ -50,15 +50,29 @@ private void OnTriggerEnter(Collider other)
 
     if (other.CompareTag("Enemy"))
     {
+        
         EnemyHealt enemyHealt = other.GetComponent<EnemyHealt>();
         if (enemyHealt == null)
         {
             enemyHealt = other.GetComponentInParent<EnemyHealt>(); // por si el collider no está en el root
+            Debug.Log("me quede aca");
         }
 
         if (enemyHealt != null)
         {
             enemyHealt.TakeDamange(damage);
+        }
+        
+        BossHealth bossHealth = other.GetComponent<BossHealth>();
+        if(bossHealth == null){
+            bossHealth = other.GetComponentInParent<BossHealth>();
+            Debug.Log("Entre al daño del boss");
+        }
+
+        if (bossHealth != null){
+            
+            bossHealth.TakeDamange(damage);
+            Debug.Log("En teoria le estoy haciendo daño");
         }
     }
 
