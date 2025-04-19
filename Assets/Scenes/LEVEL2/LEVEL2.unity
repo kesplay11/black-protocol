@@ -1081,7 +1081,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 4.93
+  m_Radius: 6
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1001 &75926217
 PrefabInstance:
@@ -17236,7 +17236,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 4.93
+  m_Radius: 6
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &983046772 stripped
 Transform:
@@ -20134,7 +20134,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 4.93
+  m_Radius: 6
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1149336232 stripped
 Transform:
@@ -23302,7 +23302,7 @@ SphereCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Radius: 4.93
+  m_Radius: 6
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!4 &1312565070 stripped
 Transform:
@@ -37015,6 +37015,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1848933892}
     m_Modifications:
+    - target: {fileID: 1175821517708423247, guid: 855b1d1ef8b45924e9c487a99993351d, type: 3}
+      propertyPath: m_Radius
+      value: 6.06
+      objectReference: {fileID: 0}
     - target: {fileID: 4275989457137409833, guid: 855b1d1ef8b45924e9c487a99993351d, type: 3}
       propertyPath: targetPlayer
       value: 

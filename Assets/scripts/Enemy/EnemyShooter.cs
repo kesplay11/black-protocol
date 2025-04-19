@@ -8,7 +8,7 @@ public class EnemyShooter : MonoBehaviour
     public Transform firePoint;      
     public float fireRate = 1f;      
     public float bulletSpeed = 20f;  
-    public float detectionRange = 8f; 
+    public float detectionRange = 15f; 
     public LayerMask playerLayer;    
 
     private Transform player;
@@ -40,7 +40,7 @@ public class EnemyShooter : MonoBehaviour
 
         float angle = Vector3.Angle(transform.forward, directionPlayer);
 
-        if(angle > 30f){
+        if(angle > 50f){
             return;
         }
 

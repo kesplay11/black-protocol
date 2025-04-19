@@ -8,7 +8,7 @@ public class EnemyHealthBoss : MonoBehaviour
 
     public bool destroy= false;
 
-    private EnemyRespawnBoss respawnScript;
+    private EnemyRespawnBoss enemyRespawnScript;
 
    
 
@@ -16,7 +16,7 @@ public class EnemyHealthBoss : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        respawnScript = GetComponent<EnemyRespawnBoss>();
+        enemyRespawnScript = GetComponent<EnemyRespawnBoss>();
         
     }
 
@@ -28,9 +28,9 @@ public class EnemyHealthBoss : MonoBehaviour
 
     private void DestroyEnemy(){
 
-        if(respawnScript != null){
+        if(enemyRespawnScript != null){
             destroy = false;
-            respawnScript.StartRespawn();
+            enemyRespawnScript.StartRespawn();
         }
 
         
@@ -42,7 +42,7 @@ public class EnemyHealthBoss : MonoBehaviour
 
         if (enemyLife <= 0 ){
 
-            respawnScript.StartRespawn();
+            enemyRespawnScript.StartRespawn();
 
         }
     }

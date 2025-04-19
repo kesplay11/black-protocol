@@ -62,6 +62,16 @@ private void OnTriggerEnter(Collider other)
         {
             enemyHealt.TakeDamange(damage);
         }
+
+        EnemyHealthBoss enemyHealthBoss = other.GetComponent<EnemyHealthBoss>();
+        if (enemyHealthBoss == null){
+            enemyHealthBoss = other.GetComponentInParent<EnemyHealthBoss>();
+        }
+
+        if (enemyHealthBoss != null){
+
+            enemyHealthBoss.TakeDamange(damage);
+        }
         
         BossHealth bossHealth = other.GetComponent<BossHealth>();
         if(bossHealth == null){
