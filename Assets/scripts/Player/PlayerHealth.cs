@@ -13,9 +13,9 @@ public class PlayerHealth : MonoBehaviour
 
     [SerializeField] private Slider lifeBar; // Asigna desde el Inspector
 
+
     private void Start()
     {
-        // Inicializamos el valor de la barra
         playerLifer = maxHealth;
 
         if (lifeBar != null)
@@ -26,12 +26,12 @@ public class PlayerHealth : MonoBehaviour
         }
     }
 
-    public void TakeDamange(int damange)
+    public void TakeDamage(int damage)
     {
         if (isDead)
             return;
 
-        playerLifer -= damange;
+        playerLifer -= damage;
         Debug.Log("Player Life: " + playerLifer);
 
         if (lifeBar != null)

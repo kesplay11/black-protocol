@@ -49,6 +49,12 @@ MonoBehaviour:
   _proyectile: {fileID: 8536715453866083626, guid: 31b0943bdc1757c4f924a2555ce51204, type: 3}
   _spawnPosition: {fileID: 8980403778508476100}
   _force: 30
+  _spawnPosition: {fileID: 8980403778508476100}
+  _force: 30
+  _reloadTime: 2
+  maxAmmoInClip: 30
+  totalAmmo: 210
+  shootAudio: {fileID: 0}
 --- !u!1 &3765813057896639298
 GameObject:
   m_ObjectHideFlags: 0
