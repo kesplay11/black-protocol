@@ -65,9 +65,9 @@ public class EnemyHealt : MonoBehaviour
 
         }
     }
+    }
     void Update()
     {
         PruebaAutoDestruccion();
     }
-
 }
