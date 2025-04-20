@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class BossHealth : MonoBehaviour
 {
-    public int enemyLife = 1000;
+    public int enemyLife = 700;
 
     public bool destroy= false;
 

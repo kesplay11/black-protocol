@@ -11,9 +11,9 @@ public class EnemyHealt : MonoBehaviour
     private EnemyRespawn respawnScript;
 
    
-    private EnemyCounter enemyCounter; 
+    //private EnemyCounter enemyCounter; 
 
-     private bool alreadyCounted = false; // ← Para evitar contar varias veces
+     //private bool alreadyCounted = false; // ← Para evitar contar varias veces
 
 
 
@@ -21,7 +21,7 @@ public class EnemyHealt : MonoBehaviour
     void Start()
     {
         respawnScript = GetComponent<EnemyRespawn>();
-        enemyCounter = FindObjectOfType<EnemyCounter>(); // ← Esto busca el objeto que tenga ese script
+        //enemyCounter = FindObjectOfType<EnemyCounter>(); // ← Esto busca el objeto que tenga ese script
         
     }
 
@@ -48,7 +48,7 @@ public class EnemyHealt : MonoBehaviour
         if (enemyLife <= 0 ){
 
             respawnScript.StartRespawn();
-        if (enemyLife <= 0 && !alreadyCounted){
+        /*if (enemyLife <= 0 && !alreadyCounted){
 
             alreadyCounted = true;
 
@@ -60,11 +60,8 @@ public class EnemyHealt : MonoBehaviour
             if(respawnScript != null)
             {
                 respawnScript.StartRespawn();
-            }
-
-
+            }*/
         }
-    }
     }
     void Update()
     {

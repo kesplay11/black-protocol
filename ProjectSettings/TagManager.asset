@@ -9,6 +9,7 @@ TagManager:
   - Environment
   - Enemy
   - DetectedZone
+  - Boss
   layers:
   - Default
   - TransparentFX
